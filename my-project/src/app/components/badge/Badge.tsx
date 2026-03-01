@@ -1,29 +1,36 @@
 import React from 'react';
 import Image from 'next/image';
-import { StaticImport } from 'next/dist/shared/lib/get-img-props';
-
-interface BadgeProps {
-  rank: number;
-  iconImage: string | StaticImport;
-  username?: string;
-  background_color?: string;
-  background_images?: string[];
-  colorrank?: string;
-  textcolor?: string;
-  style_icon?: string;
-}
+import { BadgeProps } from './types';
 
 const Badge: React.FC<BadgeProps> = ({
   rank,
   iconImage,
   username,
+  level,
   background_color = 'bg-linear-to-r from-cyan-400 to-lime-300',
   background_images = [],
-  colorrank = 'bg-[#8923A8]',
   textcolor = 'text-gray-800',
   style_icon = '',
 }) => {
-  const iconColor = colorrank.replace('bg-', 'text-');
+  const levelRanks = [
+    { min: 40, max: 60, color: 'bg-[#8923A8]', questionicon: '/question.png' },
+    { min: 61, max: 80, color: 'bg-linear-to-r from-[#FFD501] to-[#FFB501]', questionicon: '/question2.png' },
+  ];
+
+  const getRankColor = (rank: number) => {
+    const found = levelRanks.find((level) => rank >= level.min && rank <= level.max);
+    return found ? found.color : "bg-gray-400";
+  }
+
+  const getQuestionIcon = (rank: number) => {
+    const found = levelRanks.find((level) => rank >= level.min && rank <= level.max);
+    return found ? found.questionicon : '/question.png';
+  }
+
+  const rankColor = getRankColor(rank);
+  const questionIcon = getQuestionIcon(rank);
+
+  const iconColor = rankColor.replace('bg-', 'text-');
 
   return (
     <div className={`inline-flex items-center justify-center
@@ -44,20 +51,20 @@ const Badge: React.FC<BadgeProps> = ({
     rounded-[19998px] 
     overflow-hidden
     shadow-md
-    ${iconImage ? 'pr-4' : ''} 
+    pr-4
   `}
 >
   {/* 🎨 Background Color Layer (bottom) */}
   <div
     className={`
       absolute inset-0
-      ${username ? background_color : 'bg-linear-to-b from-gray-600 to-gray-700'}
+      ${(level > rank) ? background_color : 'bg-linear-to-b from-gray-600 to-gray-700'}
       z-0
     `}
   />
 
   {/* 🖼 Background Image Layer (middle) */}
-  {username && background_images && (
+  {(level > rank) && background_images && (
   <div className="absolute inset-0 flex z-10">
     {background_images.map((bg, index) => (
       <div
@@ -71,6 +78,11 @@ const Badge: React.FC<BadgeProps> = ({
   </div>
 )}
 
+  {!(level > rank) && (<div className='absolute inset-0 flex z-10'>
+    <div className='flex-1 bg-[url("/Black.png")] bg-no-repeat bg-center opacity-20'>
+    </div>
+  </div>)}
+
   {/* ✍️ Content Layer (top) */}
   <div className="relative z-20 flex items-center w-full">
     
@@ -79,7 +91,7 @@ const Badge: React.FC<BadgeProps> = ({
       className={`
         flex items-center justify-center 
         w-4 h-4 shrink-0 
-        ${colorrank} 
+        ${rankColor} 
         text-white text-[10px] leading-none font-semibold 
         [clip-path:polygon(30%_0%,70%_0%,100%_30%,100%_70%,70%_100%,30%_100%,0%_70%,0%_30%)] 
         ml-1 mr-0.75
@@ -89,28 +101,28 @@ const Badge: React.FC<BadgeProps> = ({
     </span>
 
     {/* Username */}
-    {username ? (
+    {(level > rank) ? (
       <span className={`${textcolor} text-[14px] w-37 h-5.5 truncate`}>
         {username}
       </span>
     ) : (
       <span className="w-37 h-5.5 flex items-center justify-center">
         <Image
-          src="/question.png"
+          src={questionIcon}
           width={7.75}
           height={10.73}
           alt="?"
           className={`${iconColor} -rotate-35 -mr-0.5 mt-1`}
         />
         <Image
-          src="/question.png"
+          src={questionIcon}
           width={11.32}
           height={16.09}
           alt="?"
           className={`${iconColor}`}
         />
         <Image
-          src="/question.png"
+          src={questionIcon}
           width={7.75}
           height={10.73}
           alt="?"
@@ -122,7 +134,7 @@ const Badge: React.FC<BadgeProps> = ({
 </div>
 
       {/* Icon - 1/2 overlapping badge, vertically centered */}
-      {username && (
+      {(level > rank) && (
         <span
           className="
             absolute 
@@ -135,7 +147,7 @@ const Badge: React.FC<BadgeProps> = ({
             z-30
           "
         >
-          <Image src={iconImage} width={24} height={24} alt="Badge Icon" className={style_icon}/>
+          <Image src={iconImage} width={22} height={22} alt="Badge Icon" className={style_icon}/>
         </span>
       )}
     </div>
