@@ -37,7 +37,7 @@ const Badge: React.FC<BadgeProps> = ({
           px-6 py-4
           rounded-lg
           border
-         ${username ? 'bg-white' : 'bg-[#DDDDDD]/30'} 
+         ${(level > rank) ? 'bg-white' : 'bg-[#DDDDDD]/30 '} 
           border-[#DDDDDD]
           w-54.5
           h-28.5`}
@@ -58,10 +58,10 @@ const Badge: React.FC<BadgeProps> = ({
   <div
     className={`
       absolute inset-0
-      ${(level > rank) ? background_color : 'bg-linear-to-b from-gray-600 to-gray-700'}
-      z-0
+      ${(level > rank) ? background_color : 'bg-[#444c55]'}
     `}
   />
+  
 
   {/* 🖼 Background Image Layer (middle) */}
   {(level > rank) && background_images && (
@@ -78,10 +78,10 @@ const Badge: React.FC<BadgeProps> = ({
   </div>
 )}
 
-  {!(level > rank) && (<div className='absolute inset-0 flex z-10'>
-    <div className='flex-1 bg-[url("/Black.png")] bg-no-repeat bg-center opacity-20'>
+  {/* {!(level > rank) && (<div className='absolute inset-0 flex z-10'>
+    <div className='flex-1 mask-t-from-50% bg-[url("/BG_blue.png")] bg-cover bg-center blur-sm opacity-10'>
     </div>
-  </div>)}
+  </div>)} */}
 
   {/* ✍️ Content Layer (top) */}
   <div className="relative z-20 flex items-center w-full">
