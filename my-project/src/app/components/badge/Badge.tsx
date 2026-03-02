@@ -44,23 +44,39 @@ const Badge: React.FC<BadgeProps> = ({
           >
         <div className="relative inline-flex items-center">
       {/* Main Badge */}
+       {!(level > rank) && <div className='absolute
+        w-45 h-5.5 max-w-xl
+        rounded-full
+        bg-[#454c57]
+        opacity-100
+        blur-[1px]
+        z-10
+        pointer-events-none'/>}
       <div
   className={`
-    relative inline-flex items-center 
+    relative flex items-center 
     w-45 h-5.5 
     rounded-[19998px] 
     overflow-hidden
-    shadow-md
     pr-4
   `}
 >
   {/* 🎨 Background Color Layer (bottom) */}
-  <div
+  {/* <div
     className={`
-      absolute inset-0
+      absolute inset-0 
       ${(level > rank) ? background_color : 'bg-[#444c55]'}
     `}
-  />
+  /> */}
+
+  {(level > rank) && (<div className={`absolute inset-0 ${background_color}`}/>)}
+  {!(level > rank) && (<div className='absolute left-1/2 top-1/2
+        -translate-x-1/2 -translate-y-1/2
+        w-45 h-5.5  max-w-xl
+        rounded-full
+        bg-black opacity-1
+        z-10
+        flex items-center justify-center'/>)}
   
 
   {/* 🖼 Background Image Layer (middle) */}
@@ -77,11 +93,6 @@ const Badge: React.FC<BadgeProps> = ({
     ))}
   </div>
 )}
-
-  {/* {!(level > rank) && (<div className='absolute inset-0 flex z-10'>
-    <div className='flex-1 mask-t-from-50% bg-[url("/BG_blue.png")] bg-cover bg-center blur-sm opacity-10'>
-    </div>
-  </div>)} */}
 
   {/* ✍️ Content Layer (top) */}
   <div className="relative z-20 flex items-center w-full">
