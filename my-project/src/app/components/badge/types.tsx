@@ -5,10 +5,11 @@ export interface BadgeProps {
   iconImage: string | StaticImport;
   level: number;
   userName: string;
+  background_border?: string;
+  duration?: number;
   background_color?: string;
   background_images?: string;
   background_icons?: string[];
-  colorrank?: string;
-  textcolor?: string;
+  textColor?: string;
   style_icon?: string;
 }

@@ -7,20 +7,22 @@ const Badge: React.FC<BadgeProps> = ({
     iconImage,
     userName,
     level,
+    duration = 10,
+    background_border = 'bg-linear-to-r from-cyan-400 to-lime-300',
     background_color = "bg-linear-to-r from-cyan-400 to-lime-300",
     background_images = '',
     background_icons = [],
-    textcolor = "text-gray-800",
+    textColor = "text-gray-800",
     style_icon = "",
 }) => {
     const levelRanks = [
-        { min: 40, max: 60, color: "bg-[#8923A8]", questionicon: "/question.png" },
-        { min: 61, max: 80, color: "bg-linear-to-r from-[#FFD501] to-[#FFB501]", questionicon: "/question2.png" },
+        { min: 40, max: 60, color: "bg-[#8923A8]", questionIcon: "/question.png" },
+        { min: 61, max: 80, color: "bg-linear-to-r from-[#FFD501] to-[#FFB501]", questionIcon: "/question2.png" },
     ];
 
     const getProperty = (rank: number) => {
         const found = levelRanks.find((level) => rank >= level.min && rank <= level.max);
-        return found ? { rankColor: found.color, questionIcon: found.questionicon } : { rankColor: "bg-gray-400", questionIcon: '/question.png' };
+        return found ? { rankColor: found.color, questionIcon: found.questionIcon } : { rankColor: "bg-gray-400", questionIcon: '/question.png' };
     }
 
     const { rankColor, questionIcon } = getProperty(rank);
@@ -31,8 +33,23 @@ const Badge: React.FC<BadgeProps> = ({
             ${isUnlocked ? 'bg-white' : 'bg-[#DDDDDD]/30'}
         `}>
             <div className="relative inline-flex items-center">
+                <div className="relative inline-flex items-center p-px rounded-[19998px] overflow-hidden">
+                    <div className={`absolute inset-0 rounded-[19998px] ${background_border}`}/>
+                    <div className="animate-border-spin" style={{
+                    width: "800%",
+                    height: "800%",
+                    animationDuration: `${duration}s`,
+                    background: `conic-gradient(
+                      from 0deg,
+                      transparent 0deg,
+                      transparent 300deg,
+                      #22d3ee 330deg,
+                      #ffffff 355deg,
+                      #22d3ee 360deg
+                    )`
+                    }}/>
                 {/* Main Badge */}
-                {!isUnlocked && <div className="absolute w-45 h-5.5 rounded-full bg-[#454c57] opacity-100 blur-[1px] z-10"/>}
+                {!isUnlocked && <div className="absolute w-45 h-5.5 rounded-[19998px] bg-[#454c57] opacity-100 blur-[1px] z-10"/>}
                 <div className="relative flex items-center w-45 h-5.5 rounded-[19998px] overflow-hidden pr-4">
                     {/* 🎨 Background Color Layer (bottom) */}
                     {isUnlocked && <div className={`absolute inset-0 ${background_color}`}/>}
@@ -61,7 +78,7 @@ const Badge: React.FC<BadgeProps> = ({
 
                         {/* Username */}
                         {isUnlocked && (
-                            <span className={`${textcolor} text-[14px] w-37 h-5.5 truncate`}>
+                            <span className={`${textColor} text-[14px] w-37 h-5.5 truncate`}>
                                 {userName}
                             </span>
                         )}
@@ -73,6 +90,7 @@ const Badge: React.FC<BadgeProps> = ({
                             </span>
                         )}
                     </div>
+                </div>
                 </div>
                 {/* Icon - 1/2 overlapping badge, vertically centered */}
                 {isUnlocked && (

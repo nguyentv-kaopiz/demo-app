@@ -24,7 +24,7 @@ export default function Home() {
       userName: "Longusername 1234567890",
       level: 100,
       iconImage: "/star.png",
-      textcolor: "text-[#FFDC64]",
+      textColor: "text-[#FFDC64]",
       background_images: "bg-[url('/bg-night.png')] bg-repeat-y bg-cover",
       style_icon: "rotate-35"
     },
@@ -33,7 +33,7 @@ export default function Home() {
       userName: "Longusername 1234567890",
       level: 100,
       iconImage: "/flower2.png",
-      textcolor: "text-[#0A491B]",
+      textColor: "text-[#0A491B]",
       background_color: "bg-linear-to-r from-[#59C408] to-[#C9F543]",
       style_icon: "rotate-35",
       background_icons: [
@@ -46,7 +46,7 @@ export default function Home() {
       userName: "Longusername 1234567890",
       level: 100,
       iconImage: "/rainbow.png",
-      textcolor: "text-[#3A0E47]",
+      textColor: "text-[#3A0E47]",
       background_color: "bg-linear-to-r from-[#EA2F87] via-[#EF9C09] via-[#F9E000] via-[#93E221] via-[#1BC1DB] via-[#25ABD9] via-[#4170D4] to-[#4A3C9E]"
     },
     {
@@ -54,7 +54,7 @@ export default function Home() {
       userName: "Longusername 1234567890",
       level: 100,
       iconImage: "/cake.png",
-      textcolor: "text-[#FF008F]",
+      textColor: "text-[#FF008F]",
       background_color: "bg-[#FFBBE1]",
       style_icon: "rotate-14",
       background_images: "bg-[url('/StrawberryCake.png')] bg-[length:30px_22px] bg-repeat"
@@ -64,7 +64,7 @@ export default function Home() {
       userName: "Longusername 1234567890",
       level: 100,
       iconImage: "/lemon.png",
-      textcolor: "text-[#FF008F]",
+      textColor: "text-[#FF008F]",
       background_color: "bg-linear-to-r from-[#00CAFC] to-[#FADB0F]",
       background_images: "bg-[url('/b1.png')] bg-[length:30%_160%] bg-repeat bg-[position:25%_50%] opacity-25",
     },
@@ -73,7 +73,7 @@ export default function Home() {
       userName: "Longusername 1234567890",
       level: 100,
       iconImage: "/can.png",
-      textcolor: "text-[#FFDA0A]",
+      textColor: "text-[#FFDA0A]",
       background_color: "bg-[#621016]",
       background_images: "bg-[url('/Cola.png')] bg-[length:30px_22px] bg-repeat",
       style_icon: "rotate-10 fill"
@@ -83,7 +83,7 @@ export default function Home() {
       userName: "Longusername 1234567890",
       level: 100,
       iconImage: "/candy.png",
-      textcolor: "text-[#4F1D1D]",
+      textColor: "text-[#4F1D1D]",
       background_color: "bg-linear-to-r from-[#FF74B1] via-[#FFEB76] to-[#A6EAFF]",
       style_icon: "-rotate-25 fill"
     },
@@ -92,7 +92,7 @@ export default function Home() {
       userName: "Longusername 1234567890",
       level: 100,
       iconImage: "/popcorn.png",
-      textcolor: "text-[#FFDA0A]",
+      textColor: "text-[#FFDA0A]",
       background_color: "bg-[#C54823]",
       background_images: "bg-[url('/Popcorn4.png')] bg-[length:30px_22px] bg-repeat",
       style_icon: "rotate-9 fill",
@@ -106,7 +106,7 @@ export default function Home() {
       userName: "Longusername 1234567890",
       level: 75,
       iconImage: "/popcorn.png",
-      textcolor: "text-[#FFDA0A]",
+      textColor: "text-[#FFDA0A]",
       background_color: "bg-[#C54823]",
       background_images: "bg-[url('/Popcorn1.png')] bg-[length:30px_22px] bg-no-repeat",
       style_icon: "rotate-9 fill"
@@ -116,7 +116,7 @@ export default function Home() {
       userName: "Longusername 1234567890",
       level: 40,
       iconImage: "/popcorn.png",
-      textcolor: "text-[#FFDA0A]",
+      textColor: "text-[#FFDA0A]",
       background_color: "bg-[#C54823]",
       background_images: "bg-[url('/Popcorn1.png')] bg-[length:30px_22px] bg-no-repeat",
       style_icon: "rotate-9 fill"
