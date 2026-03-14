@@ -1,6 +1,42 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import { BadgeProps } from "./types";
+
+function capsuleOrbit(t: number, w: number, h: number) {
+  const r = h / 2;
+  const arc = Math.PI * r;
+  const line = w - h;
+  const perim = 2 * arc + 2 * line;
+  const arc_ratio = arc / perim;
+  const line_ratio = line / perim;
+
+  if (t < arc_ratio) {
+    const ratio = t / arc_ratio;
+    const theta = (0.5 * Math.PI) + ratio * Math.PI;
+    const x = r + r * Math.cos(theta);
+    const y = r + r * Math.sin(theta);
+    return [x, h - y];
+  }
+  if (t < arc_ratio + line_ratio) {
+    const ratio = (t - arc_ratio) / line_ratio;
+    const x = r + ratio * (w - h);
+    const y = 0;
+    return [x, h - y];
+  }
+  if (t < arc_ratio + line_ratio + arc_ratio) {
+    const ratio = (t - arc_ratio - line_ratio) / arc_ratio;
+    const theta = (1.5 * Math.PI) + ratio * Math.PI;
+    const x = w - r + r * Math.cos(theta);
+    const y = r + r * Math.sin(theta);
+    return [x, h - y];
+  }
+  const ratio = (t - 2 * arc_ratio - line_ratio) / line_ratio;
+  const x = w - r - ratio * (w - h);
+  const y = h;
+  return [x, h - y];
+}
 
 const Badge: React.FC<BadgeProps> = ({
     rank,
@@ -15,6 +51,26 @@ const Badge: React.FC<BadgeProps> = ({
     textColor = "text-gray-800",
     style_icon = "",
 }) => {
+    const W = 182;
+    const H = 24;
+    const dotRef = useRef<SVGCircleElement>(null);
+
+  useEffect(() => {
+    let frame: number, started: number | undefined;
+    function animate(ts: number) {
+      if (!started) started = ts;
+      const t = ((ts - started) / (duration * 1000)) % 1;
+      const [x, y] = capsuleOrbit(t, W, H);
+      if (dotRef.current) {
+        dotRef.current.setAttribute("cx", x.toString());
+        dotRef.current.setAttribute("cy", y.toString());
+      }
+      frame = requestAnimationFrame(animate);
+    }
+    frame = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(frame);
+  }, [duration]);
+
     const levelRanks = [
         { min: 40, max: 60, color: "bg-[#8923A8]", questionIcon: "/question.png" },
         { min: 61, max: 80, color: "bg-linear-to-r from-[#FFD501] to-[#FFB501]", questionIcon: "/question2.png" },
@@ -34,27 +90,16 @@ const Badge: React.FC<BadgeProps> = ({
         `}>
             <div className="relative inline-flex items-center">
                 <div className="relative inline-flex items-center p-px rounded-[19998px] overflow-hidden">
-                    <div className={`absolute inset-0 rounded-[19998px] ${background_border}`}/>
-                    <div className="animate-border-spin" style={{
-                    width: "800%",
-                    height: "800%",
-                    animationDuration: `${duration}s`,
-                    background: `conic-gradient(
-                      from 0deg,
-                      transparent 0deg,
-                      transparent 300deg,
-                      #22d3ee 330deg,
-                      #ffffff 355deg,
-                      #22d3ee 360deg
-                    )`
-                    }}/>
+                    <div className={`absolute inset-0 rounded-[19998px] ${background_border} overflow-hidden`}/>
+                    <svg width={W} height={H} style={{position: "absolute", left: 0, top: 0, pointerEvents: "none"}}>
+                        <circle ref={dotRef} r={7} fill="#fff" stroke="#22d3ee"strokeWidth={2}/>
+                    </svg>
                 {/* Main Badge */}
                 {!isUnlocked && <div className="absolute w-45 h-5.5 rounded-[19998px] bg-[#454c57] opacity-100 blur-[1px] z-10"/>}
                 <div className="relative flex items-center w-45 h-5.5 rounded-[19998px] overflow-hidden pr-4">
                     {/* 🎨 Background Color Layer (bottom) */}
                     {isUnlocked && <div className={`absolute inset-0 ${background_color}`}/>}
                     {!isUnlocked && <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-45 h-5.5 bg-black opacity-1 z-10"/>}
-
                     {/* 🖼 Background Image Layer (middle) */}
                     {isUnlocked && (
                         <div className="absolute inset-0 flex">
